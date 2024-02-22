@@ -432,27 +432,19 @@ public class Util
     public static T? FromJson<T>(string? json, T? fallback = default(T))
     {
         if (String.IsNullOrEmpty(json)) return fallback;
-        //return JsonConvert.DeserializeObject<T>(json);
         return JsonSerializer.Deserialize<T>(json);
     }
 
     public static dynamic? FromObject(dynamic? x)
     {
         if (x is null) return null;
-        //var o = (dynamic)JObject.FromObject(new { x = x },
-        //    new JsonSerializer
-        //    {
-        //        DateParseHandling = DateParseHandling.None
-        //    });
-        //return o.x;
         return FromJson(ToJson(x));
     }
 
     public static T? FromObject<T>(dynamic? x)
     {
-        dynamic? o = FromObject(x);
-        if (o is null) return default(T);
-        return ToObject<T>(x);
+        string json = ToJson(x);
+        return JsonSerializer.Deserialize<T>(json);
     }
 
     public static dynamic? ToObject(dynamic? x)
