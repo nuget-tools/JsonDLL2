@@ -452,7 +452,7 @@ public class Util
     {
         dynamic? o = FromObject(x);
         if (o is null) return default(T);
-        return (T)(o.ToObject<T>());
+        return ToObject<T>(x);
     }
 
     public static dynamic? ToObject(dynamic? x)
